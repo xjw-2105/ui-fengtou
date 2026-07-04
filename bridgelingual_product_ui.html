@@ -1,0 +1,870 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>声渡语桥 BridgeLingual Product UI Concept</title>
+  <style>
+    :root {
+      --navy: #163A6B;
+      --navy-2: #102C52;
+      --blue: #2F6FDB;
+      --blue-2: #5B8DEF;
+      --blue-3: #A9C7FF;
+      --blue-4: #EAF2FF;
+      --panel: #FFFFFF;
+      --page: #F5F8FF;
+      --line: #CAD6EA;
+      --grid: #D8E3F3;
+      --text: #172033;
+      --muted: #66758A;
+      --soft: #F8FAFE;
+      --ok: #256F9C;
+      --warn: #9B6B15;
+      --danger: #8D3A4A;
+      --shadow: 0 16px 44px rgba(22, 58, 107, 0.14);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      background: var(--page);
+      color: var(--text);
+      font-family: "Inter", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", Arial, sans-serif;
+      letter-spacing: 0;
+    }
+
+    button, input, select {
+      font: inherit;
+    }
+
+    .app {
+      min-height: 100vh;
+      display: grid;
+      grid-template-columns: 248px minmax(980px, 1fr);
+      background:
+        linear-gradient(90deg, rgba(22, 58, 107, 0.05) 1px, transparent 1px),
+        linear-gradient(0deg, rgba(22, 58, 107, 0.04) 1px, transparent 1px),
+        var(--page);
+      background-size: 44px 44px;
+    }
+
+    .sidebar {
+      background: var(--navy-2);
+      color: white;
+      padding: 24px 18px;
+      display: flex;
+      flex-direction: column;
+      gap: 22px;
+      border-right: 1px solid rgba(255, 255, 255, 0.12);
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      min-height: 46px;
+    }
+
+    .logo {
+      width: 42px;
+      height: 42px;
+      border-radius: 8px;
+      background: var(--blue);
+      position: relative;
+      box-shadow: inset 0 0 0 1px rgba(255,255,255,0.25);
+    }
+
+    .logo:before,
+    .logo:after {
+      content: "";
+      position: absolute;
+      border: 2px solid rgba(255,255,255,0.9);
+      border-top: 0;
+      width: 25px;
+      height: 12px;
+      left: 8px;
+      border-radius: 0 0 20px 20px;
+    }
+
+    .logo:before {
+      top: 10px;
+    }
+
+    .logo:after {
+      top: 18px;
+      opacity: 0.72;
+    }
+
+    .brand strong {
+      display: block;
+      font-size: 17px;
+      line-height: 1.2;
+    }
+
+    .brand span {
+      color: rgba(255,255,255,0.68);
+      font-size: 12px;
+    }
+
+    .nav {
+      display: grid;
+      gap: 6px;
+    }
+
+    .nav button {
+      border: 0;
+      background: transparent;
+      color: rgba(255,255,255,0.76);
+      text-align: left;
+      padding: 11px 12px;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      cursor: pointer;
+    }
+
+    .nav button.active,
+    .nav button:hover {
+      color: white;
+      background: rgba(91, 141, 239, 0.22);
+    }
+
+    .dot {
+      width: 9px;
+      height: 9px;
+      border-radius: 50%;
+      background: currentColor;
+      opacity: 0.9;
+      flex: 0 0 auto;
+    }
+
+    .sidebar-block {
+      border: 1px solid rgba(255,255,255,0.14);
+      background: rgba(255,255,255,0.06);
+      border-radius: 8px;
+      padding: 14px;
+    }
+
+    .sidebar-block h3 {
+      margin: 0 0 10px;
+      font-size: 13px;
+      color: rgba(255,255,255,0.72);
+      font-weight: 600;
+    }
+
+    .quota {
+      display: grid;
+      gap: 8px;
+      font-size: 12px;
+      color: rgba(255,255,255,0.78);
+    }
+
+    .bar {
+      width: 100%;
+      height: 7px;
+      background: rgba(255,255,255,0.14);
+      border-radius: 99px;
+      overflow: hidden;
+    }
+
+    .bar span {
+      display: block;
+      height: 100%;
+      background: var(--blue-2);
+      border-radius: inherit;
+    }
+
+    .main {
+      padding: 24px;
+      overflow: auto;
+    }
+
+    .topbar {
+      min-height: 64px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+      margin-bottom: 18px;
+    }
+
+    .title h1 {
+      margin: 0;
+      color: var(--navy);
+      font-size: 24px;
+      line-height: 1.2;
+    }
+
+    .title p {
+      margin: 6px 0 0;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .actions {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex: 0 0 auto;
+    }
+
+    .btn {
+      border: 1px solid var(--line);
+      background: white;
+      color: var(--navy);
+      border-radius: 8px;
+      padding: 10px 14px;
+      cursor: pointer;
+      font-weight: 600;
+      min-height: 40px;
+    }
+
+    .btn.primary {
+      color: white;
+      border-color: var(--blue);
+      background: var(--blue);
+    }
+
+    .dashboard {
+      display: grid;
+      grid-template-columns: minmax(340px, 1fr) minmax(360px, 1.05fr) minmax(320px, 0.95fr);
+      gap: 16px;
+      align-items: start;
+    }
+
+    .panel {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+
+    .panel-head {
+      min-height: 54px;
+      padding: 14px 16px;
+      border-bottom: 1px solid var(--line);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      background: var(--soft);
+    }
+
+    .panel-head h2 {
+      margin: 0;
+      font-size: 15px;
+      color: var(--navy);
+    }
+
+    .badge {
+      border: 1px solid var(--line);
+      background: var(--blue-4);
+      color: var(--navy);
+      border-radius: 999px;
+      padding: 4px 9px;
+      font-size: 12px;
+      white-space: nowrap;
+      font-weight: 600;
+    }
+
+    .panel-body {
+      padding: 16px;
+    }
+
+    .video-frame {
+      aspect-ratio: 16 / 9;
+      border-radius: 8px;
+      border: 1px solid var(--line);
+      background:
+        linear-gradient(180deg, rgba(16,44,82,0.12), rgba(16,44,82,0.36)),
+        linear-gradient(135deg, #E7EEF9 0%, #B6CAE9 50%, #8BA9D5 100%);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .scene-sky {
+      position: absolute;
+      left: 0;
+      right: 0;
+      top: 0;
+      height: 42%;
+      background: linear-gradient(180deg, #E9F2FF 0%, rgba(233,242,255,0) 100%);
+    }
+
+    .scene-wall {
+      position: absolute;
+      left: 8%;
+      right: 8%;
+      top: 37%;
+      height: 15%;
+      background: rgba(255,255,255,0.42);
+      border-top: 2px solid rgba(22,58,107,0.35);
+      border-bottom: 2px solid rgba(22,58,107,0.2);
+    }
+
+    .person {
+      position: absolute;
+      bottom: 15%;
+      width: 54px;
+      height: 120px;
+    }
+
+    .person.left {
+      left: 31%;
+    }
+
+    .person.right {
+      right: 31%;
+    }
+
+    .head {
+      position: absolute;
+      top: 0;
+      left: 17px;
+      width: 22px;
+      height: 22px;
+      background: #F0D4BD;
+      border-radius: 50%;
+      border: 1px solid rgba(22,58,107,0.22);
+    }
+
+    .robe {
+      position: absolute;
+      left: 6px;
+      top: 22px;
+      width: 44px;
+      height: 88px;
+      background: #FFFFFF;
+      border: 1px solid rgba(22,58,107,0.25);
+      transform: skewX(-4deg);
+      clip-path: polygon(50% 0, 95% 100%, 5% 100%);
+    }
+
+    .right .robe {
+      background: #D8E6FF;
+    }
+
+    .subtitle {
+      position: absolute;
+      left: 50%;
+      bottom: 12px;
+      transform: translateX(-50%);
+      width: 82%;
+      background: rgba(16, 44, 82, 0.82);
+      color: white;
+      border-radius: 6px;
+      padding: 7px 10px;
+      text-align: center;
+      font-size: 13px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .video-meta {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+      margin-top: 12px;
+    }
+
+    .metric {
+      border: 1px solid var(--line);
+      background: var(--soft);
+      border-radius: 8px;
+      padding: 10px;
+      min-height: 72px;
+    }
+
+    .metric span {
+      display: block;
+      color: var(--muted);
+      font-size: 12px;
+      margin-bottom: 6px;
+    }
+
+    .metric strong {
+      color: var(--navy);
+      font-size: 18px;
+    }
+
+    .pipeline {
+      display: grid;
+      gap: 12px;
+    }
+
+    .step {
+      display: grid;
+      grid-template-columns: 36px 1fr auto;
+      gap: 12px;
+      align-items: center;
+      border: 1px solid var(--line);
+      background: white;
+      border-radius: 8px;
+      padding: 11px;
+    }
+
+    .step-num {
+      width: 34px;
+      height: 34px;
+      border-radius: 8px;
+      display: grid;
+      place-items: center;
+      background: var(--blue-4);
+      color: var(--navy);
+      font-weight: 800;
+      border: 1px solid var(--line);
+    }
+
+    .step h3 {
+      margin: 0 0 3px;
+      color: var(--text);
+      font-size: 14px;
+    }
+
+    .step p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .status {
+      color: var(--ok);
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    .tabs {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 6px;
+      margin-bottom: 12px;
+    }
+
+    .tab {
+      border: 1px solid var(--line);
+      background: white;
+      color: var(--muted);
+      padding: 8px 6px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 12px;
+      font-weight: 700;
+      min-height: 36px;
+    }
+
+    .tab.active {
+      background: var(--blue);
+      border-color: var(--blue);
+      color: white;
+    }
+
+    .segment-list {
+      display: grid;
+      gap: 10px;
+    }
+
+    .segment {
+      border: 1px solid var(--line);
+      background: white;
+      border-radius: 8px;
+      padding: 12px;
+    }
+
+    .segment-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      color: var(--muted);
+      font-size: 12px;
+      margin-bottom: 8px;
+    }
+
+    .segment p {
+      margin: 0;
+      line-height: 1.55;
+      font-size: 13px;
+    }
+
+    .segment .target {
+      margin-top: 8px;
+      padding-top: 8px;
+      border-top: 1px dashed var(--line);
+      color: var(--navy);
+      font-weight: 600;
+    }
+
+    .right-grid {
+      display: grid;
+      gap: 12px;
+    }
+
+    .language-row {
+      display: grid;
+      grid-template-columns: 48px 1fr 54px;
+      gap: 10px;
+      align-items: center;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 10px;
+      background: white;
+    }
+
+    .lang-code {
+      color: var(--navy);
+      font-weight: 800;
+      text-align: center;
+      border-radius: 6px;
+      background: var(--blue-4);
+      padding: 7px 0;
+    }
+
+    .language-row strong {
+      display: block;
+      font-size: 13px;
+      margin-bottom: 3px;
+    }
+
+    .language-row span {
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .score {
+      color: var(--ok);
+      font-weight: 800;
+      text-align: right;
+    }
+
+    .compliance {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px;
+    }
+
+    .check {
+      border: 1px solid var(--line);
+      background: var(--soft);
+      border-radius: 8px;
+      padding: 10px;
+      min-height: 82px;
+    }
+
+    .check strong {
+      display: block;
+      color: var(--navy);
+      font-size: 13px;
+      margin-bottom: 7px;
+    }
+
+    .check span {
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.45;
+    }
+
+    .footer-strip {
+      margin-top: 16px;
+      display: grid;
+      grid-template-columns: 1.2fr 1fr 1fr 1fr;
+      gap: 12px;
+    }
+
+    .summary {
+      border: 1px solid var(--line);
+      background: white;
+      border-radius: 8px;
+      padding: 14px;
+      min-height: 94px;
+    }
+
+    .summary span {
+      display: block;
+      color: var(--muted);
+      font-size: 12px;
+      margin-bottom: 7px;
+    }
+
+    .summary strong {
+      color: var(--navy);
+      font-size: 20px;
+    }
+
+    @media (max-width: 1180px) {
+      .app {
+        grid-template-columns: 1fr;
+      }
+
+      .sidebar {
+        display: none;
+      }
+
+      .main {
+        padding: 18px;
+      }
+
+      .dashboard,
+      .footer-strip {
+        grid-template-columns: 1fr;
+      }
+
+      .topbar {
+        align-items: flex-start;
+        flex-direction: column;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="app">
+    <aside class="sidebar">
+      <div class="brand">
+        <div class="logo" aria-hidden="true"></div>
+        <div>
+          <strong>声渡语桥</strong>
+          <span>BridgeLingual Studio</span>
+        </div>
+      </div>
+
+      <nav class="nav" aria-label="Product sections">
+        <button class="active"><span class="dot"></span>项目工作台</button>
+        <button><span class="dot"></span>文化适配中心</button>
+        <button><span class="dot"></span>AI 配音工坊</button>
+        <button><span class="dot"></span>合规预检系统</button>
+        <button><span class="dot"></span>发行数据回流</button>
+      </nav>
+
+      <div class="sidebar-block">
+        <h3>本月额度</h3>
+        <div class="quota">
+          <div>已处理 18,420 / 25,000 分钟</div>
+          <div class="bar"><span style="width:74%"></span></div>
+          <div>剩余 6,580 分钟 · 4 个项目排队</div>
+        </div>
+      </div>
+
+      <div class="sidebar-block">
+        <h3>交付等级</h3>
+        <div class="quota">
+          <div>短剧极速版 · 12 小时</div>
+          <div>长剧精修版 · 3-5 天</div>
+          <div>审校团队：中英日印尼语</div>
+        </div>
+      </div>
+    </aside>
+
+    <main class="main">
+      <header class="topbar">
+        <div class="title">
+          <h1>《云水令》第 12 集 · 多语种本地化项目</h1>
+          <p>客户：广州星河短剧 · 源语言：中文普通话 · 目标市场：日本 / 印尼 / 北美 / 中东</p>
+        </div>
+        <div class="actions">
+          <button class="btn">导出审校报告</button>
+          <button class="btn primary">交付多语种成片</button>
+        </div>
+      </header>
+
+      <section class="dashboard">
+        <article class="panel">
+          <div class="panel-head">
+            <h2>原始视频</h2>
+            <span class="badge">EP12 · 02:14</span>
+          </div>
+          <div class="panel-body">
+            <div class="video-frame" aria-label="Original Chinese drama preview">
+              <div class="scene-sky"></div>
+              <div class="scene-wall"></div>
+              <div class="person left"><div class="head"></div><div class="robe"></div></div>
+              <div class="person right"><div class="head"></div><div class="robe"></div></div>
+              <div class="subtitle">“你若执意远行，我便在桥上等你归来。”</div>
+            </div>
+            <div class="video-meta">
+              <div class="metric"><span>识别准确率</span><strong>97.8%</strong></div>
+              <div class="metric"><span>角色数量</span><strong>6</strong></div>
+              <div class="metric"><span>敏感片段</span><strong>3</strong></div>
+            </div>
+          </div>
+        </article>
+
+        <article class="panel">
+          <div class="panel-head">
+            <h2>AI 本地化流水线</h2>
+            <span class="badge">82% 完成</span>
+          </div>
+          <div class="panel-body">
+            <div class="pipeline">
+              <div class="step">
+                <div class="step-num">1</div>
+                <div><h3>ASR 转写与说话人分离</h3><p>6 个角色声纹已绑定，时间轴误差 0.18 秒</p></div>
+                <div class="status">完成</div>
+              </div>
+              <div class="step">
+                <div class="step-num">2</div>
+                <div><h3>上下文翻译与术语一致性</h3><p>专名、称谓、口头禅跨 100 集保持一致</p></div>
+                <div class="status">完成</div>
+              </div>
+              <div class="step">
+                <div class="step-num">3</div>
+                <div><h3>文化适配与风险标注</h3><p>宗教隐喻、古代礼制、亲密称谓已按市场分层处理</p></div>
+                <div class="status">审校中</div>
+              </div>
+              <div class="step">
+                <div class="step-num">4</div>
+                <div><h3>AI 配音与字幕同步</h3><p>日语版已生成，印尼语与阿语进入音色匹配</p></div>
+                <div class="status">进行中</div>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <article class="panel">
+          <div class="panel-head">
+            <h2>多语言交付状态</h2>
+            <span class="badge">4 个市场</span>
+          </div>
+          <div class="panel-body right-grid">
+            <div class="language-row">
+              <div class="lang-code">JA</div>
+              <div><strong>日语字幕 + 配音</strong><span>二次元语气增强 · 已过审校</span></div>
+              <div class="score">98</div>
+            </div>
+            <div class="language-row">
+              <div class="lang-code">ID</div>
+              <div><strong>印尼语字幕</strong><span>宗教敏感词替换 · 待人工确认</span></div>
+              <div class="score">92</div>
+            </div>
+            <div class="language-row">
+              <div class="lang-code">EN</div>
+              <div><strong>英语字幕 + 配音</strong><span>北美短剧口吻 · 情绪强度 84%</span></div>
+              <div class="score">95</div>
+            </div>
+            <div class="language-row">
+              <div class="lang-code">AR</div>
+              <div><strong>阿语字幕</strong><span>右至左排版 · 分级提示已生成</span></div>
+              <div class="score">89</div>
+            </div>
+          </div>
+        </article>
+
+        <article class="panel">
+          <div class="panel-head">
+            <h2>审校编辑器</h2>
+            <span class="badge">文化适配优先</span>
+          </div>
+          <div class="panel-body">
+            <div class="tabs">
+              <button class="tab active" data-tab="translation">翻译</button>
+              <button class="tab" data-tab="voice">配音</button>
+              <button class="tab" data-tab="culture">文化</button>
+              <button class="tab" data-tab="compliance">合规</button>
+            </div>
+            <div class="segment-list" id="tabContent">
+              <div class="segment">
+                <div class="segment-head"><span>00:31.2 - 00:35.6</span><span>角色：女主</span></div>
+                <p>原文：你若执意远行，我便在桥上等你归来。</p>
+                <p class="target">日语：それでも旅立つなら、私はこの橋であなたの帰りを待つ。</p>
+              </div>
+              <div class="segment">
+                <div class="segment-head"><span>00:42.8 - 00:46.1</span><span>文化提示</span></div>
+                <p>“桥上等你”在日语版保留浪漫意象；印尼语版建议弱化宿命感，避免过度悲剧化。</p>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <article class="panel">
+          <div class="panel-head">
+            <h2>本地化预览</h2>
+            <span class="badge">日语版</span>
+          </div>
+          <div class="panel-body">
+            <div class="video-frame" aria-label="Localized Japanese preview">
+              <div class="scene-sky"></div>
+              <div class="scene-wall"></div>
+              <div class="person left"><div class="head"></div><div class="robe"></div></div>
+              <div class="person right"><div class="head"></div><div class="robe"></div></div>
+              <div class="subtitle">それでも旅立つなら、この橋であなたを待つ。</div>
+            </div>
+            <div class="video-meta">
+              <div class="metric"><span>口型匹配</span><strong>91%</strong></div>
+              <div class="metric"><span>情绪保真</span><strong>88%</strong></div>
+              <div class="metric"><span>字幕可读</span><strong>96%</strong></div>
+            </div>
+          </div>
+        </article>
+
+        <article class="panel">
+          <div class="panel-head">
+            <h2>合规预检</h2>
+            <span class="badge">自动留痕</span>
+          </div>
+          <div class="panel-body">
+            <div class="compliance">
+              <div class="check"><strong>AI 标识</strong><span>配音与字幕合成内容已写入交付说明和水印轨道。</span></div>
+              <div class="check"><strong>声音授权</strong><span>角色音色来自授权库；未使用真人演员克隆。</span></div>
+              <div class="check"><strong>印尼分级</strong><span>亲密称谓与宗教隐喻进入人工复核队列。</span></div>
+              <div class="check"><strong>美国数据</strong><span>用户侧数据不回传；仅同步脱敏处理指标。</span></div>
+            </div>
+          </div>
+        </article>
+      </section>
+
+      <section class="footer-strip">
+        <div class="summary"><span>本集处理成本</span><strong>¥83</strong></div>
+        <div class="summary"><span>预计人工节省</span><strong>76%</strong></div>
+        <div class="summary"><span>交付时间</span><strong>8 min</strong></div>
+        <div class="summary"><span>目标语种</span><strong>12</strong></div>
+      </section>
+    </main>
+  </div>
+
+  <script>
+    const content = {
+      translation: [
+        ["00:31.2 - 00:35.6", "角色：女主", "原文：你若执意远行，我便在桥上等你归来。", "日语：それでも旅立つなら、私はこの橋であなたの帰りを待つ。"],
+        ["00:42.8 - 00:46.1", "文化提示", "原文：此生不负山河，不负卿。", "英语建议：I will honor my land and my love, whatever it takes."]
+      ],
+      voice: [
+        ["女主音色", "温柔 / 克制 / 古风", "日语 TTS 情绪曲线已匹配原声停顿。", "建议：第二句尾音降低 6%，避免动漫腔过强。"],
+        ["男主音色", "低沉 / 坚定", "英语版保留原声背景，AI 配音音量 -3dB。", "状态：待最终混音。"]
+      ],
+      culture: [
+        ["文化梗", "中式誓言", "“不负山河”直译会显得抽象。", "改写为目标市场更容易理解的责任/爱意表达。"],
+        ["目标市场", "印尼 / 沙特", "古装亲密称谓可能被误读为婚恋关系过强。", "建议分级提示并弱化露骨表达。"]
+      ],
+      compliance: [
+        ["授权链", "声音 / 肖像", "本项目未使用真人演员声音克隆。", "授权状态：通过。"],
+        ["AI 标识", "字幕 / 配音", "交付包包含 AI 合成说明、版本号和水印轨。", "合规状态：通过。"]
+      ]
+    };
+
+    const tabs = document.querySelectorAll(".tab");
+    const target = document.getElementById("tabContent");
+
+    function renderTab(name) {
+      target.innerHTML = content[name].map(row => `
+        <div class="segment">
+          <div class="segment-head"><span>${row[0]}</span><span>${row[1]}</span></div>
+          <p>${row[2]}</p>
+          <p class="target">${row[3]}</p>
+        </div>
+      `).join("");
+    }
+
+    tabs.forEach(tab => {
+      tab.addEventListener("click", () => {
+        tabs.forEach(item => item.classList.remove("active"));
+        tab.classList.add("active");
+        renderTab(tab.dataset.tab);
+      });
+    });
+  </script>
+</body>
+</html>
